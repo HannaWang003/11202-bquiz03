@@ -119,5 +119,5 @@ class DB
     }
 }
 //資料表
-
+$Poster = new DB('poster');
 //判斷是否瀏覽過
