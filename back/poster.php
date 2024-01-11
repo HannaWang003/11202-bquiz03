@@ -27,7 +27,7 @@
 </div>
 <div style="width:100%;height:190px;overflow:auto">
     <?php
-    $pos = $Poster->all("order by `rank`");
+    $pos = $Poster->all("order by rank");
     foreach ($pos as $idx => $po) {
     ?>
     <form action="./api/edit_poster.php" method="post">
@@ -35,7 +35,10 @@
             <div><img src="./img/<?= $po['img'] ?>" alt="" style="width:60px;height:80px;"></div>
             <div><input type="text" name="name[]" id="" value=<?= $po['name'] ?>></div>
             <div>
-                <input type="button" value="往上"><input type="button" value="往下">
+                <input type="button" value="往上" data-id="<?= $po['id'];?>"
+                    data-sw="<?=($idx!==0)?$pos[$idx - 1]['id']:$po['id']; ?>">
+                <input type="button" value="往下" data-id="<?= $po['id'];?>"
+                    data-sw="<?=((count($pos)-1)!=$idx)? $pos[$idx + 1]['id']:$po['id']; ?>">
             </div>
             <div>
                 <input type="hidden" name="id[]" value=<?= $po['id'] ?>>
