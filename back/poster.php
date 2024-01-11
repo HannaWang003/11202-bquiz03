@@ -35,10 +35,10 @@
             <div><img src="./img/<?= $po['img'] ?>" alt="" style="width:60px;height:80px;"></div>
             <div><input type="text" name="name[]" id="" value=<?= $po['name'] ?>></div>
             <div>
-                <input type="button" value="往上" data-id="<?= $po['id'];?>"
-                    data-sw="<?=($idx!==0)?$pos[$idx - 1]['id']:$po['id']; ?>">
-                <input type="button" value="往下" data-id="<?= $po['id'];?>"
-                    data-sw="<?=((count($pos)-1)!=$idx)? $pos[$idx + 1]['id']:$po['id']; ?>">
+                <input class="btn" type="button" value="往上" data-id="<?= $po['id']; ?>"
+                    data-sw="<?= ($idx !== 0) ? $pos[$idx - 1]['id'] : $po['id']; ?>">
+                <input class="btn" type="button" value="往下" data-id="<?= $po['id']; ?>"
+                    data-sw="<?= ((count($pos) - 1) != $idx) ? $pos[$idx + 1]['id'] : $po['id']; ?>">
             </div>
             <div>
                 <input type="hidden" name="id[]" value=<?= $po['id'] ?>>
@@ -77,3 +77,18 @@
         <div class="ct"><input type="submit" value="新增"><input type="reset" value="重置"></div>
     </form>
 </div>
+<script>
+$(".btn").on('click', (e) => {
+    let id = $(e.target).data('id');
+    let sw = $(e.target).data('sw');
+    let table = 'poster';
+    console.log(sw);
+    $.post("./api/sw.php", {
+        id,
+        sw,
+        table
+    }, () => {
+        location.reload();
+    })
+});
+</script>
