@@ -10,21 +10,21 @@
     </div>
 </div>
 <style>
-.movies {
-    display: flex;
-    flex-wrap: wrap;
-}
+    .movies {
+        display: flex;
+        flex-wrap: wrap;
+    }
 
-.movie {
-    display: flex;
-    flex-wrap: wrap;
-    box-sizing: border-box;
-    padding: 2px;
-    margin: 0.25%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 49%;
-}
+    .movie {
+        display: flex;
+        flex-wrap: wrap;
+        box-sizing: border-box;
+        padding: 2px;
+        margin: 0.25%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 49%;
+    }
 </style>
 <div class="half">
     <h1>院線片清單</h1>
@@ -41,28 +41,28 @@
             $movies = $Movie->all(" where `ondate`>='$ondate' && `ondate`<='$today' && `sh`=1 order by rank limit $start,$div");
             foreach ($movies as $movie) {
             ?>
-            <div class="movie">
-                <div style="width:65%;">
-                    <a href="?do=intro&id=<?= $movie['id'] ?>">
-                        <img src="./img/<?= $movie['poster'] ?>" style="width:60px;border:3px solid white;">
-                    </a>
-                </div>
-                <div style="width:35%;">
-                    <div><?= $movie['name'] ?></div>
-                    <div style="font-size:12px">
-                        分級:<img src="./icon/03C0<?= $movie['level'] ?>.png">
+                <div class="movie">
+                    <div style="width:65%;">
+                        <a href="?do=intro&id=<?= $movie['id'] ?>">
+                            <img src="./img/<?= $movie['poster'] ?>" style="width:60px;border:3px solid white;">
+                        </a>
                     </div>
-                    <divv style="font-size:12px">上映日期:<?= $movie['ondate'] ?>
+                    <div style="width:35%;">
+                        <div><?= $movie['name'] ?></div>
+                        <div style="font-size:12px">
+                            分級:<img src="./icon/03C0<?= $movie['level'] ?>.png">
+                        </div>
+                        <divv style="font-size:12px">上映日期:<?= $movie['ondate'] ?>
+                    </div>
+                    <div style="width:100%;">
+                        <button onclick="location.href='?do=intro&id=<?= $movie['id'] ?>'">劇情介紹</button>
+                        <button onclick="location.href='?do=order&id=<?= $movie['id'] ?>'">線上訂票</button>
+                    </div>
                 </div>
-                <div style="width:100%;">
-                    <button onclick="location.href=?do=intro&id=<?= $movie['id'] ?>">劇情介紹</button>
-                    <button onclick="location.href=?do=intro&id=<?= $movie['id'] ?>">線上訂票</button>
-                </div>
-            </div>
 
             <?php
             }
-    ?>
+            ?>
         </div>
     </div>
     <div class="ct">
