@@ -45,7 +45,7 @@
     }
 
     .btns {
-        width: 380px;
+        width: 360px;
         height: 100px;
         /* background: lightgray; */
         display: flex;
@@ -56,6 +56,7 @@
             width: 90px;
             flex-shrink: 0;
             text-align: center;
+            position: relative;
 
             img {
                 width: 60px;
@@ -115,6 +116,29 @@
 </div>
 <script>
     $('.item').eq(0).show();
+    let total = $(".btn").length;
+    // console.log(total);
+    let p = 0;
+    $(".left,.right").on('click', function() {
+        let arrow = $(this).attr('class')
+        switch (arrow) {
+            case "right":
+                if (p + 1 <= (total - 4)) {
+                    p = p + 1;
+                }
+
+                break;
+            case "left":
+                if (p - 1 >= 0) {
+                    p = p - 1;
+                }
+
+                break;
+        }
+        $(".btn").animate({
+            right: 90 * p
+        });
+    })
 </script>
 <style>
     .movies {
