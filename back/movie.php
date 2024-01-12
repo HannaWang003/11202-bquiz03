@@ -34,6 +34,7 @@
 <div style="width:100%;height:415px;overflow:auto">
     <?php
     $movies = $Movie->all("order by rank");
+    // dd($movies);
     foreach ($movies as $idx => $movie) {
     ?>
 
@@ -109,13 +110,16 @@ $(".sw-btn").on("click", (e) => {
 })
 $(".edit-btn").on("click", function() {
     let id = $(this).data('id');
-    $.post("./api/del.php", {
-        id,
-        table: 'movie'
-    }, )
+    location.href = `?do=edit_movie&id=${id}`;
 
 })
 $(".del-btn").on("click", function() {
-
+    let id = $(this).data('id');
+    $.post("./api/del.php", {
+        id,
+        table: 'movie'
+    }, () => {
+        location.reload();
+    })
 })
 </script>
