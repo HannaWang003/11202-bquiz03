@@ -1,13 +1,13 @@
 <style>
-.form {
-    td:nth-child(1) {
-        text-align-last: justify;
-        padding-right: 5px;
+    .form {
+        td:nth-child(1) {
+            text-align-last: justify;
+            padding-right: 5px;
+        }
     }
-}
 </style>
 <h1 class="ct">新增院線片</h1>
-<form action="./api/add_movie.php" method="post" enctype="multipart/form-data">
+<form action="./api/save_movie.php" method="post" enctype="multipart/form-data">
     <div style="display:flex;align-items:start">
         <div style="width:15%;">影片資料</div>
         <div style="width:85%;">
