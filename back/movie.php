@@ -110,7 +110,8 @@ $(".sw-btn").on("click", (e) => {
 $(".edit-btn").on("click", function() {
     let id = $(this).data('id');
     $.post("./api/del.php", {
-        id
+        id,
+        table: 'movie'
     }, )
 
 })
