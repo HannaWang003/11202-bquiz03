@@ -18,38 +18,42 @@
     </div>
 </div>
 <script>
-getMovies();
-$("#movie").on("change", function() {
-    getDates($('#movie').val());
-})
-$("#date").on("change", function() {
-    getSessions($("#movie").val(), $("#date").val());
-})
-
-function getMovies() {
-    $.get("./api/get_movies.php", (movies) => {
-        $('#movie').html(movies)
-        getDates($('#movie').val())
+    let url = new URL(window.location.href)
+    getMovies();
+    $("#movie").on("change", function() {
+        getDates($('#movie').val());
     })
-}
-
-function getDates(id) {
-    $.get("./api/get_dates.php", {
-        id
-    }, (dates) => {
-        $('#date').html(dates);
-        let movie = $('#movie').val();
-        let date = $('#date').val();
-        getSessions(movie, date);
+    $("#date").on("change", function() {
+        getSessions($("#movie").val(), $("#date").val());
     })
-}
 
-function getSessions(movie, date) {
-    $.get("./api/get_sessions.php", {
-        movie,
-        date
-    }, (sessions) => {
-        $('#session').html(sessions);
-    })
-}
+    function getMovies() {
+        $.get("./api/get_movies.php", (movies) => {
+            $('#movie').html(movies)
+            if (url.searchParams.has('id')) {
+                $(`#movie option[value='${url.searchParams.get('id')}']`).prop('selected', true);
+            }
+            getDates($('#movie').val())
+        })
+    }
+
+    function getDates(id) {
+        $.get("./api/get_dates.php", {
+            id
+        }, (dates) => {
+            $('#date').html(dates);
+            let movie = $('#movie').val();
+            let date = $('#date').val();
+            getSessions(movie, date);
+        })
+    }
+
+    function getSessions(movie, date) {
+        $.get("./api/get_sessions.php", {
+            movie,
+            date
+        }, (sessions) => {
+            $('#session').html(sessions);
+        })
+    }
 </script>

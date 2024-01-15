@@ -128,4 +128,5 @@ $sess = [
 //資料表
 $Poster = new DB('poster');
 $Movie = new DB('movie');
+$Orders = new DB('orders');
 //判斷是否瀏覽過
