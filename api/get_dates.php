@@ -1,3 +1,11 @@
-<option value="1">1</option>
-<option value="1">2</option>
-<option value="1">3</option>
+<?php include_once "db.php";
+$movie = $_GET['id'];
+$ondate = $Movie->find($movie)['ondate'];
+$today = date("Y-m-d");
+for ($i = 0; $i < 3; $i++) {
+    $date = strtotime("+$i days", $ondate);
+    if ($date >= strtotime($today)) {
+        $str = date("Y-m-d", $date);
+        echo "<option value='{$str}'>$str</option>";
+    }
+}
