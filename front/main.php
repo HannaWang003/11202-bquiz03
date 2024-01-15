@@ -87,7 +87,7 @@
             $posters = $Poster->all(['sh' => 1], "order by rank");
             foreach ($posters as $poster) {
             ?>
-            <div class="item">
+            <div class="item" data-ani="<?= $poster['ani']; ?>">
                 <div><img src="./img/<?= $poster['img'] ?>" alt=""></div>
                 <div><?= $poster['name'] ?></div>
             </div>
@@ -116,20 +116,51 @@
 </div>
 <script>
 $('.item').eq(0).show();
+let total = $(".btn").length;
 let now = 0;
 let timer = setInterval(() => {
-    silde()
-}, 3000)
+    slide()
+
+}, 1500)
 
 function slide() {
-    $(".item").hide();
-    now++;
-    if (now > $total - 1) {
-        now = 0
+    let ani = $('.item').eq(now).data('ani');
+    let next = now + 1;
+    if (next >= total) {
+        next = 0;
     }
-    $(".item").eq(now).show();
+    switch (ani) {
+        case 1:
+            $(".item").eq(now).fadeOut(1000, function() {
+                $(".item").eq(next).fadeIn(1000)
+            })
+            break;
+        case 2:
+            $(".item").eq(now).hide(1000, function() {
+                $(".item").eq(next).show(1000)
+            })
+            break;
+        case 3:
+            $(".item").eq(now).hide(1000, function() {
+                $(".item").eq(next).slideDown(1000)
+            })
+            break;
+    }
+    now = next;
+
+
 }
-let total = $(".btn").length;
+$('.btn').hover(
+    function() {
+        clearInterval(timer);
+    },
+    function() {
+        timer = setInterval(() => {
+            slide()
+
+        }, 3000)
+    }
+)
 // console.log(total);
 let p = 0;
 $(".left,.right").on('click', function() {
