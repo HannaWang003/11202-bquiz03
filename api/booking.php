@@ -5,33 +5,33 @@ $date = $_GET['date'];
 $session = $_GET['session'];
 ?>
 <style>
-#room {
-    background-image: url('./icon/03D04.png');
-    background-position: center;
-    background-repeat: none;
-    width: 540px;
-    height: 370px;
-    margin: auto;
-    box-sizing: border-box;
-    padding: 19px 112px 0 112px;
-}
+    #room {
+        background-image: url('./icon/03D04.png');
+        background-position: center;
+        background-repeat: none;
+        width: 540px;
+        height: 370px;
+        margin: auto;
+        box-sizing: border-box;
+        padding: 19px 112px 0 112px;
+    }
 
-.seat {
-    width: 63px;
-    height: 85px;
-    position: relative;
-}
+    .seat {
+        width: 63px;
+        height: 85px;
+        position: relative;
+    }
 
-.seats {
-    display: flex;
-    flex-wrap: wrap;
-}
+    .seats {
+        display: flex;
+        flex-wrap: wrap;
+    }
 
-.chk {
-    position: absolute;
-    right: 2px;
-    bottom: 2px;
-}
+    .chk {
+        position: absolute;
+        right: 2px;
+        bottom: 2px;
+    }
 </style>
 <div id="room">
     <div class="seats">
@@ -61,7 +61,20 @@ $session = $_GET['session'];
     </div>
 </div>
 <script>
-$('#chk').on('change', function() {
+    let seats = new Array();
+    $('.chk').on('change', function() {
+        if ($(this).prop('checked')) {
+            if (seats.length + 1 <= 4) {
+                seats.push($(this).val());
+            } else {
+                $(this).prop('checked', false);
+                alert('每個人只能勾選四張票');
 
-})
+            }
+        } else {
+            seats.splice(seats.indexOf($(this).val()), 1);
+        }
+        console.log(seats);
+        $('#tickets').text(seats.length);
+    })
 </script>
