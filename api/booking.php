@@ -5,26 +5,33 @@ $date = $_GET['date'];
 $session = $_GET['session'];
 ?>
 <style>
-    #room {
-        background-image: url('./icon/03D04.png');
-        background-position: center;
-        background-repeat: none;
-        width: 540px;
-        height: 370px;
-        margin: auto;
-        box-sizing: border-box;
-        padding: 19px 112px 0 112px;
-    }
+#room {
+    background-image: url('./icon/03D04.png');
+    background-position: center;
+    background-repeat: none;
+    width: 540px;
+    height: 370px;
+    margin: auto;
+    box-sizing: border-box;
+    padding: 19px 112px 0 112px;
+}
 
-    .seat {
-        width: 63px;
-        height: 85px;
-    }
+.seat {
+    width: 63px;
+    height: 85px;
+    position: relative;
+}
 
-    .seats {
-        display: flex;
-        flex-wrap: wrap;
-    }
+.seats {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chk {
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+}
 </style>
 <div id="room">
     <div class="seats">
@@ -35,6 +42,10 @@ $session = $_GET['session'];
             echo (floor($i / 5) + 1) . "排";
             echo (($i % 5) + 1) . "號";
             echo "</div>";
+            echo "<div class='ct'>";
+            echo "<img src='./icon/03D02.png'>";
+            echo "</div>";
+            echo "<input type='checkbox' name='chk' value='$i' class='chk'>";
             echo "</div>";
         }
         ?>
@@ -49,3 +60,8 @@ $session = $_GET['session'];
         <button>訂購</button>
     </div>
 </div>
+<script>
+$('#chk').on('change', function() {
+
+})
+</script>
