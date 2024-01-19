@@ -17,6 +17,9 @@
         <button>重置</button>
     </div>
 </div>
+<div id="booking">
+
+</div>
 <script>
     let url = new URL(window.location.href)
     getMovies();
@@ -54,6 +57,19 @@
             date
         }, (sessions) => {
             $('#session').html(sessions);
+        })
+    }
+
+    function booking() {
+        let order = {
+            movie_id: $("#movie").val(),
+            date: $("#date").val(),
+            session: $("#session").val()
+        }
+        $.get('./api/booking.php', order, (booking) => {
+            $('#booking').html(booking)
+            $('#select').hide();
+            $('#booking').show();
         })
     }
 </script>
