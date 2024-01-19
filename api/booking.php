@@ -82,9 +82,10 @@ $session = $_GET['session'];
         $.post('./api/checkout.php', {
             movie: '<?= $movie['name'] ?>',
             date: '<?= $date ?>',
+            qt: seats.length,
             session: '<?= $session ?>'
         }, (no) => {
-            location: href = `?do=result&&no={no}`;
+            location: href = `?do=result&no={no}`;
         })
     }
 </script>
