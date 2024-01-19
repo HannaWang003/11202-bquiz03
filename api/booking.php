@@ -57,7 +57,7 @@ $session = $_GET['session'];
     <div>您已勾選<span id="tickets">0</span>張票，最多可以購買四張票</div>
     <div>
         <button onclick="$('#select').show();$('#booking').hide()">上一步</button>
-        <button>訂購</button>
+        <button onclick="checkout()">訂購</button>
     </div>
 </div>
 <script>
@@ -77,4 +77,14 @@ $session = $_GET['session'];
         console.log(seats);
         $('#tickets').text(seats.length);
     })
+
+    function checkout() {
+        $.post('./api/checkout.php', {
+            movie: '<?= $movie['name'] ?>',
+            date: '<?= $date ?>',
+            session: '<?= $session ?>'
+        }, (no) => {
+            location: href = `?do=result&&no={no}`;
+        })
+    }
 </script>
