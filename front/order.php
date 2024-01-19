@@ -13,63 +13,63 @@
         <select name="session" id="session"></select>
     </div>
     <div>
-        <button>確定</button>
+        <button onclick="booking()">確定</button>
         <button>重置</button>
     </div>
 </div>
-<div id="booking">
+<div id="booking" style="display:none">
 
 </div>
 <script>
-    let url = new URL(window.location.href)
-    getMovies();
-    $("#movie").on("change", function() {
-        getDates($('#movie').val());
-    })
-    $("#date").on("change", function() {
-        getSessions($("#movie").val(), $("#date").val());
-    })
+let url = new URL(window.location.href)
+getMovies();
+$("#movie").on("change", function() {
+    getDates($('#movie').val());
+})
+$("#date").on("change", function() {
+    getSessions($("#movie").val(), $("#date").val());
+})
 
-    function getMovies() {
-        $.get("./api/get_movies.php", (movies) => {
-            $('#movie').html(movies)
-            if (url.searchParams.has('id')) {
-                $(`#movie option[value='${url.searchParams.get('id')}']`).prop('selected', true);
-            }
-            getDates($('#movie').val())
-        })
-    }
-
-    function getDates(id) {
-        $.get("./api/get_dates.php", {
-            id
-        }, (dates) => {
-            $('#date').html(dates);
-            let movie = $('#movie').val();
-            let date = $('#date').val();
-            getSessions(movie, date);
-        })
-    }
-
-    function getSessions(movie, date) {
-        $.get("./api/get_sessions.php", {
-            movie,
-            date
-        }, (sessions) => {
-            $('#session').html(sessions);
-        })
-    }
-
-    function booking() {
-        let order = {
-            movie_id: $("#movie").val(),
-            date: $("#date").val(),
-            session: $("#session").val()
+function getMovies() {
+    $.get("./api/get_movies.php", (movies) => {
+        $('#movie').html(movies)
+        if (url.searchParams.has('id')) {
+            $(`#movie option[value='${url.searchParams.get('id')}']`).prop('selected', true);
         }
-        $.get('./api/booking.php', order, (booking) => {
-            $('#booking').html(booking)
-            $('#select').hide();
-            $('#booking').show();
-        })
+        getDates($('#movie').val())
+    })
+}
+
+function getDates(id) {
+    $.get("./api/get_dates.php", {
+        id
+    }, (dates) => {
+        $('#date').html(dates);
+        let movie = $('#movie').val();
+        let date = $('#date').val();
+        getSessions(movie, date);
+    })
+}
+
+function getSessions(movie, date) {
+    $.get("./api/get_sessions.php", {
+        movie,
+        date
+    }, (sessions) => {
+        $('#session').html(sessions);
+    })
+}
+
+function booking() {
+    let order = {
+        movie_id: $("#movie").val(),
+        date: $("#date").val(),
+        session: $("#session").val()
     }
+    $.get('./api/booking.php', order, (booking) => {
+        $('#booking').html(booking)
+        $('#select').hide();
+        $('#booking').show();
+    })
+}
 </script>
