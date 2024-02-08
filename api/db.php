@@ -100,6 +100,6 @@ function q($sql){
     return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 }
 }
-
+$Poster = new DB('poster');
 
 ?>
