@@ -23,6 +23,7 @@
 
     <h3 class="ct">預告片清單</h3>
     <div style='height:200px;overflow-x:hidden;overflow-y:auto;'>
+    <form id="editPoster">
 <table class="ts">
     <thead>
     <tr>
@@ -32,10 +33,16 @@
         <th>操作</th>
         </tr>
         </thead>
+       
         <tbody id="posterAry">
-
+<!-- ajax -->
         </tbody>
-</table>
+    </table>
+    <div class="ct">
+        <input type="submit" value="編輯確定">
+        <input type="reset" value="重置">
+</div>
+</form>
 </div>
 <hr>
 <div>
@@ -66,24 +73,30 @@ function posterAry(){
             let posterContent=$('#posterAry');
             let html ='';
         $.each(res,function(key,val){
-            html = `
+            html += `
             <tr>
             <td class='ct'>
             <img src="./img/${val.img}">
             </td>
-            <td class='ct'><input type="text" name="name" value=${val.name}></td>
+            <td class='ct'><input type="text" name="name[]" value=${val.name}></td>
         <td class='ct'>
             <button>往上</button><br>
             <button>往下</button>
         </td>
         <td class='ct'>
-            <input type="checkbox" name="sh" value='${val.id}' ${(val.sh==1)?"checked":""}>顯示
-            <input type="checkbox" name="del" value='${val.id}'>刪除
+        <select name="ani[]">
+    <option value="1" ${(val.ani==1)?"selected":""}>淡入淡出</option>
+    <option value="2" ${(val.ani==2)?"selected":""}>縮放</option>
+    <option value="3" ${(val.ani==3)?"selected":""}>滑入滑出</option>
+</select>
+            <input type="checkbox" name="sh[]" value='${val.id}' ${(val.sh==1)?"checked":""}>顯示
+            <input type="checkbox" name="del[]" value='${val.id}'>刪除
+            <input type="hidden" name="id[]" value='${val.id}'>
         </td>
         </tr>
             `
-            posterContent.append(html);
         })
+        posterContent.html(html);
         }
     })
 }
@@ -98,8 +111,30 @@ function posterAry(){
         url:"./api/add_poster.php",
         success:function(res){
 console.log(res);
+if($.isNumeric(res)){
 alert('新增'+res+'筆資料')
+}else{
+    alert(res);
+}
+posterAry();
         }
+    })
+})
+$('#editPoster').submit(function(event){
+    event.preventDefault();
+    let editData = new FormData(this);
+    $.ajax({
+        type:"post",
+        data:editData,
+        dataType:'json',
+        contentType:false,
+        processData:false,
+        url:"./api/edit_poster.php",
+        success:function(res){
+            console.log(res);
+            posterAry();
+        }
+
     })
 })
 </script>
