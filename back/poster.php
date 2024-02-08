@@ -1,11 +1,46 @@
-<div>
+<style>
+    img{
+        width:100px;
+    }
+    h3{
+        background:#333;
+    }
+
+    table,tr,th,td{
+        border-collapse:collapse;
+    }
+    td{
+        border-bottom:1px solid #333;
+    }
+    td,th{
+        padding:5px 0;
+    }
+    thead tr{
+        background:#999;
+    }
+
+</style>
+
     <h3 class="ct">預告片清單</h3>
+    <div style='height:200px;overflow-x:hidden;overflow-y:auto;'>
+<table class="ts">
+    <thead>
+    <tr>
+        <th>預告片海報</th>
+        <th>預告片片名</th>
+        <th>預告片排序</th>
+        <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="posterAry">
+
+        </tbody>
+</table>
 </div>
 <hr>
 <div>
     <h3 class="ct">新增預告片海報</h3>
     <form id="addPoster">
-
         <table class="ts">
             <tr>
                 <td class="ct">預告片海報:</td>
@@ -18,6 +53,40 @@
     </form>
 </div>
 <script>
+    posterAry();
+function posterAry(){
+    $.ajax({
+        type:'get',
+        data:{
+            table:"Poster",
+        },
+        dataType:'json',
+        url:'./api/getAll.php',
+        success:function(res){
+            let posterContent=$('#posterAry');
+            let html ='';
+        $.each(res,function(key,val){
+            html = `
+            <tr>
+            <td class='ct'>
+            <img src="./img/${val.img}">
+            </td>
+            <td class='ct'><input type="text" name="name" value=${val.name}></td>
+        <td class='ct'>
+            <button>往上</button><br>
+            <button>往下</button>
+        </td>
+        <td class='ct'>
+            <input type="checkbox" name="sh" value='${val.id}' ${(val.sh==1)?"checked":""}>顯示
+            <input type="checkbox" name="del" value='${val.id}'>刪除
+        </td>
+        </tr>
+            `
+            posterContent.append(html);
+        })
+        }
+    })
+}
   $('#addPoster').submit(function(event){
     event.preventDefault();
     let addData = new FormData(this);
