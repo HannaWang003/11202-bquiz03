@@ -80,7 +80,7 @@ function save($ary){
             $sql.=" where `id`={$ary['id']}";
         }
     }else{
-        $sql = "inset into `$this->table` ";
+        $sql = "insert into `$this->table` ";
         $cols = "(`".join("`,`",array_keys($ary))."`)";
         $vals = "('".join("','",$ary)."')";
         $sql.=$cols." values ".$vals;
