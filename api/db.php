@@ -101,5 +101,5 @@ function q($sql){
 }
 }
 $Poster = new DB('poster');
-
+$Movie = new DB('movie');
 ?>
