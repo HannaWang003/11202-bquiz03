@@ -80,8 +80,8 @@ function posterAry(){
             </td>
             <td class='ct'><input type="text" name="name[]" value=${val.name}></td>
         <td class='ct'>
-            <button>往上</button><br>
-            <button>往下</button>
+            <input class='btn' type='button' data-id='${val.id}' data-sw='${(key!==0)?res[key-1]['id']:val.id}' value='往上'><br>
+            <input class='btn' type='button' data-id='${val.id}' data-sw='${((res.length-1)!=key)?res[key+1]['id']:val.id}' value='往下'>
         </td>
         <td class='ct'>
         <select name="ani[]">
@@ -131,10 +131,31 @@ $('#editPoster').submit(function(event){
         processData:false,
         url:"./api/edit_poster.php",
         success:function(res){
-            console.log(res);
+            // console.log(res);
             posterAry();
         }
 
+    })
+})
+$('#posterAry').on('click','.btn',function(){
+    let id = $(this).data('id');
+    let sw = $(this).data('sw');
+    $.ajax({
+        type:'post',
+        // dataType:'json',
+        data:{
+            'table':'Poster',
+            id,
+            sw
+        },
+        url:'./api/sw.php',
+        success:function(res){
+            // console.log(res)
+            posterAry();
+        },
+        error:function(){
+            console.log('error')
+        }
     })
 })
 </script>
