@@ -55,7 +55,7 @@ for($i=1;$i<=31;$i++){
                 <td><input style="width:80%" type="text" name="director" id=""></td>
             </tr>
             <tr>
-                <td>預告片</td>
+                <td>預告影片</td>
                 <td><input type="file" name="trailer" id=""></td>
             </tr>
             <tr>
