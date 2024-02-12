@@ -64,6 +64,21 @@ $.ajax({
 
 })
     }
+    function del(el,id){
+        // console.log(el)
+        $.ajax({
+            type:'post',
+            url:'./api/del.php',
+            data:{
+                'table':'Movie',
+                id,
+            },
+            success:function(res){
+                $(el).closest('.movielist').remove();
+                console.log("已刪除"+res+"筆資料")
+            }
+        })
+    }
     function movieAry(table){
         $.ajax({
             type:'get',
@@ -77,7 +92,7 @@ $.ajax({
             let html='';
             $.each(movies,function(key,movie){
                 html+=`
-                <div class='d-flex'>
+                <div class='d-flex movielist'>
         <div class='w-20'>
         <img src="./img/${movie.poster}" style='object-fix:cover;width:150px;'>
         </div>
@@ -99,7 +114,7 @@ data-id='${movie.id}'
 data-sw='${(key!=(movies.length-1))?movies[key+1]['id']:movie.id}'
 class='btn-sw'>往下</button>
 <button>編輯電影</button>
-<button>刪除電影</button>
+<button onclick='del(this,${movie.id})'>刪除電影</button>
             </div>
             <div>劇情介紹:${movie.intro}</div>
         </div>

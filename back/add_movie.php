@@ -86,7 +86,11 @@ $.ajax({
     contentType:false,
     processData:false,
     success:function(res){
-        console.log(res);
+        // console.log(res);
+    },
+    complete:function(){
+        $('.tab').load('./back/movie.php');
+
     }
 })
     })
