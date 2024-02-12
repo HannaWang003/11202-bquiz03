@@ -40,6 +40,30 @@
             }
         })
     })
+    function show(el,id){
+// console.log($(el))
+
+$.ajax({
+    type:'post',
+    url:'./api/show.php',
+    data:{
+        'table':'Movie',
+        id
+    },
+    success:function(res){
+        if(res==1){
+            $(el).text('顯示')
+        }else{
+            $(el).text('隱藏')
+        }
+
+    },
+    error:function(){
+        console.log('error')
+    }
+
+})
+    }
     function movieAry(table){
         $.ajax({
             type:'get',
@@ -65,9 +89,15 @@
                 <div>上架時間:${movie.ondate}</div>
             </div>
             <div class='text-end'>
-<button>顯示</button>
-<button>上架</button>
-<button>下架</button>
+<button onclick='show(this,${movie.id})'>${(movie.sh==1)?'顯示':'隱藏'}</button>
+<button 
+data-id='${movie.id}'
+data-sw='${(key!=0)?movies[key-1]['id']:movie.id}'
+class='btn-sw'>往上</button>
+<button
+data-id='${movie.id}'
+data-sw='${(key!=(movies.length-1))?movies[key+1]['id']:movie.id}'
+class='btn-sw'>往下</button>
 <button>編輯電影</button>
 <button>刪除電影</button>
             </div>
@@ -81,4 +111,25 @@
         })
 
     }
+    $('.container').on('click','.btn-sw',function(){
+        let id=$(this).data('id');
+        let sw = $(this).data('sw');
+        let table = 'Movie';
+        $.ajax({
+            type:'post',
+            data:{
+                id,
+                sw,
+                table
+            },
+            url:"./api/sw.php",
+            success:function(){
+                console.log('success')
+                movieAry('Movie');
+            },
+            error:function(){
+                console.log('error')
+            }
+        })
+    })
 </script>
