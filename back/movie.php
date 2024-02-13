@@ -79,7 +79,7 @@ $.ajax({
             }
         })
     }
-    function movieAry(table){
+       function movieAry(table){
         $.ajax({
             type:'get',
             url:'./api/getAll.php',
@@ -113,7 +113,7 @@ class='btn-sw'>往上</button>
 data-id='${movie.id}'
 data-sw='${(key!=(movies.length-1))?movies[key+1]['id']:movie.id}'
 class='btn-sw'>往下</button>
-<button>編輯電影</button>
+<button class='editBtn' data-id='${movie.id}'>編輯電影</button>
 <button onclick='del(this,${movie.id})'>刪除電影</button>
             </div>
             <div>劇情介紹:${movie.intro}</div>
@@ -144,6 +144,22 @@ class='btn-sw'>往下</button>
             },
             error:function(){
                 console.log('error')
+            }
+        })
+    })
+    $('.container').on('click','.editBtn',function(){
+        let id= $(this).data('id');
+        // console.log(id)
+        $.ajax({
+            type:'POST',
+            url:'./back/edit_movie.php',
+            // dataType:'json',
+            data:{
+                id
+            },
+            success:function(res){
+// console.log(res)
+                $('.tab').html(res);
             }
         })
     })
